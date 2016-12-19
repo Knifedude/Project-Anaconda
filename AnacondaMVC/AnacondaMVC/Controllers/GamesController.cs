@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AnacondaMVC.Games;
+using System.Web.WebPages;
 
 namespace AnacondaMVC.Controllers
 {
@@ -23,9 +24,11 @@ namespace AnacondaMVC.Controllers
 
         // POST: Wheel of Fortune
         [HttpPost]
-        public ActionResult WheelOfFortune(GameResult result)
+        public ActionResult WheelOfFortune(FormCollection collection)
         {
-            return View();
+            int bet = collection["Bet"].AsInt();
+            GameResult result = new GameResult();
+            return View(result);
         }
     }
 }
