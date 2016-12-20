@@ -198,6 +198,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\StaticContentController.cs" />
     <Compile Include="Controllers\WalletController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -285,6 +286,8 @@
     <Content Include="Views\Games\Index.cshtml" />
     <Content Include="Views\Games\WheelOfFortune.cshtml" />
     <Content Include="Views\Wallet\Index.cshtml" />
+    <Content Include="Views\StaticContent\Index.cshtml" />
+    <Content Include="Views\StaticContent\PageNotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
