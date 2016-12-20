@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="jumbotron">
+    <h1>Wallet</h1>
+</div>
+<div class="row">
+    <div class="col-md-2">@Html.Label("Credits")</div>
+    <div class="col-md-1">@Model.Credits</div>
+</div>
+<div class="row">
+    <div class="col-md-2">@Html.Label("Casino Credits")</div>
+
+    <div class="col-md-1">
+        @Model.CasinoCredits
+        <hr class="hr-strong"/>
+    </div>
+   
+</div>
+<div class="row">
+    <div class="col-md-2">@Html.Label("Total Balance")</div>
+
+    <div class="col-md-1"> @( Model.CasinoCredits + Model.Credits ) </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-1">
+        <button id="addCreditsButton" data-toggle="modal" data-target=".bs-example-modal-lg" class="btn">Add Credits</button>
+    </div>
+</div>
+
+
+<div id="addCreditsModal" class="modal fade bs-example-modal" role="dialog" tabindex="-1" aria-labelledby="mySmallModalLabel">
+    @using (@Html.BeginForm("AddCredits", "Wallet", FormMethod.Post, new { @class = "form-horizontal", }))
+    {
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Add Credits</h4>
+            </div>
+            <div class="modal-body">
+            
+                @Html.TextBox("creditsToAdd", 1, new { @type="number" , @min = 1})
+                
+            
+            </div>
+            <div class="modal-footer">
+                <input class="btn" type="submit" value="Save Changes">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    }
+</div><!-- /.modal-dialog -->
+
+@section Scripts {
+    <script>
+    $('#addCreditsButton').on('click', function () {
+        $('#addCreditsModal').focus();
+        console.log('test');
+        $('#addCreditsModal').modal('show');
+
+
+    })
+    </script>
+}
+
+
+
+
+
+

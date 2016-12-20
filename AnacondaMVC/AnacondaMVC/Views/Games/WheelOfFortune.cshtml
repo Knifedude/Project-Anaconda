@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "WheelOfFortune";
+}
+
+<h2>Wheel of Fortune</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.TextBox("Bet", 1, new { @type = "number", @min = 1, @max = 100 });
+    <input type="submit" value="Spin the wheel">
+}
+
+@{
+    if (IsPost)
+    {
+        <hr />
+        if (Model.CreditsGained > 0)
+        {
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    You won!
+                </div>
+                <div class="panel-body">
+                    @Model.CreditsGained Credits
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">
+                <strong>Oh snap!</strong>
+                You didn't win. Better luck next time...
+            </div>
+        }
+    }
+}
