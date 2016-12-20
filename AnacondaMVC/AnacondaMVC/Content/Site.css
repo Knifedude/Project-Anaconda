@@ -22,3 +22,12 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+.hr-strong {
+
+    border-top: 2px solid #000000;
+    margin-top: 0px;
+    margin-bottom: 5px;
+
+}
