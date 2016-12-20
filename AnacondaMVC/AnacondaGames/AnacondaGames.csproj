@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Games\GameContext.cs" />
     <Compile Include="Games\GameResult.cs" />
+    <Compile Include="Games\SlotMachine\RandomColumns.cs" />
+    <Compile Include="Games\SlotMachine\SlotItem.cs" />
     <Compile Include="Games\WheelOfFortune\BetMultiplier.cs" />
     <Compile Include="Games\WheelOfFortune\CreditIncrease.cs" />
     <Compile Include="Games\WheelOfFortune\ISpinAction.cs" />

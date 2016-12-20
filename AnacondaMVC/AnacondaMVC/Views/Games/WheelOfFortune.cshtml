@@ -13,9 +13,9 @@
 @{
     if (IsPost)
     {
+        <hr />
         if (Model.CreditsGained > 0)
         {
-            <hr/>
             <div class="panel panel-success">
                 <div class="panel-heading">
                     You won!
@@ -23,6 +23,13 @@
                 <div class="panel-body">
                     @Model.CreditsGained Credits
                 </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">
+                <strong>Oh snap!</strong>
+                You didn't win. Better luck next time...
             </div>
         }
     }
