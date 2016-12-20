@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnacondaMVC", "AnacondaMVC\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnacondaGames", "AnacondaGames\AnacondaGames.csproj", "{4481F23D-6066-4669-8202-37D7C22D529B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnacondaGamesConsole", "AnacondaGamesConsole\AnacondaGamesConsole.csproj", "{1FB2A850-4489-4525-8176-71D1FDAD7481}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{4481F23D-6066-4669-8202-37D7C22D529B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4481F23D-6066-4669-8202-37D7C22D529B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4481F23D-6066-4669-8202-37D7C22D529B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FB2A850-4489-4525-8176-71D1FDAD7481}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FB2A850-4489-4525-8176-71D1FDAD7481}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FB2A850-4489-4525-8176-71D1FDAD7481}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FB2A850-4489-4525-8176-71D1FDAD7481}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

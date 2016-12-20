@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4481F23D-6066-4669-8202-37D7C22D529B}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{1FB2A850-4489-4525-8176-71D1FDAD7481}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AnacondaGames</RootNamespace>
-    <AssemblyName>AnacondaGames</AssemblyName>
+    <RootNamespace>AnacondaGamesConsole</RootNamespace>
+    <AssemblyName>AnacondaGamesConsole</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -40,13 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Games\GameContext.cs" />
-    <Compile Include="Games\GameResult.cs" />
-    <Compile Include="Games\WheelOfFortune\CreditIncrease.cs" />
-    <Compile Include="Games\WheelOfFortune\ISpinResult.cs" />
-    <Compile Include="Games\WheelOfFortune\RandomPicker.cs" />
-    <Compile Include="Games\WheelOfFortune\WheelOfFortune.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AnacondaGames\AnacondaGames.csproj">
+      <Project>{4481f23d-6066-4669-8202-37d7c22d529b}</Project>
+      <Name>AnacondaGames</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
