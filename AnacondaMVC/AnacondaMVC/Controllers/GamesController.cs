@@ -45,6 +45,8 @@ namespace AnacondaMVC.Controllers
 
             //TODO: rand.next gives the same order for each player, would be better to have a different order for each player
 
+            //TODO: communicate bet amount and fill in the bet field with it so the player can bet the same amount over and over easily
+
             result = rp.Pick().Item.Execute(new GameContext() { Bet = bet });
 
             return View(result);
