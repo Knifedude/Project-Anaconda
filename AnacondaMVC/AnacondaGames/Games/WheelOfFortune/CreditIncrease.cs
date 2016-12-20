@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AnacondaMVC.Games.WheelOfFortune
 {
-    public class CreditIncrease : ISpinResult
+    public class CreditIncrease : ISpinAction
     {
         private int _creditsBonus;
 
