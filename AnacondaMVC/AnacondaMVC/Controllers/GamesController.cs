@@ -33,13 +33,16 @@ namespace AnacondaMVC.Controllers
 
             var items = new List<RandomItem<ISpinAction>>
             {
-                new RandomItem<ISpinAction>(0.6, new CreditIncrease(500)),
-                new RandomItem<ISpinAction>(0.1 / 3, 999),
-                new RandomItem<ISpinAction>(0.1 / 3, 999),
-                new RandomItem<ISpinAction>(0.1 / 3, 999),
-                new RandomItem<ISpinAction>(0.3, 999)
+                new RandomItem<ISpinAction>(0.6, new BetMultiplier(0.5m)),
+                new RandomItem<ISpinAction>(0.3, new BetMultiplier(1.1m)),
+                new RandomItem<ISpinAction>(0.1 / 3, new BetMultiplier(1.5m)),
+                new RandomItem<ISpinAction>(0.1 / 3, new BetMultiplier(2m)),
+                new RandomItem<ISpinAction>(0.1 / 3, new BetMultiplier(3m))
             };
-            var rp = new RandomPicker<ISpinAction>(items, 1337);
+            Random rand = new Random();
+            var rp = new RandomPicker<ISpinAction>(items, rand.Next());
+
+            //TODO: rand.next gives the same order for each player, would be better to have a different order for each player
 
             result = rp.Pick().Item.Execute(new GameContext() { Bet = bet });
 
