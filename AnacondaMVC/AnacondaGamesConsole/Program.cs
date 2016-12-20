@@ -12,7 +12,7 @@ namespace AnacondaGamesConsole
         static void Main(string[] args)
         {
 
-           TestRandomPicker();
+            TestRandomPicker();
 
             Console.ReadKey();
         }
