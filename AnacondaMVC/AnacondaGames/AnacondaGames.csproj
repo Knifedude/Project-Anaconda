@@ -42,8 +42,9 @@
   <ItemGroup>
     <Compile Include="Games\GameContext.cs" />
     <Compile Include="Games\GameResult.cs" />
+    <Compile Include="Games\WheelOfFortune\BetMultiplier.cs" />
     <Compile Include="Games\WheelOfFortune\CreditIncrease.cs" />
-    <Compile Include="Games\WheelOfFortune\ISpinResult.cs" />
+    <Compile Include="Games\WheelOfFortune\ISpinAction.cs" />
     <Compile Include="Games\WheelOfFortune\RandomPicker.cs" />
     <Compile Include="Games\WheelOfFortune\WheelOfFortune.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

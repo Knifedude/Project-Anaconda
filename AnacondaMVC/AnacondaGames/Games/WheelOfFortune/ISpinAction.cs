@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AnacondaMVC.Games.WheelOfFortune
 {
-    interface ISpinResult
+    public interface ISpinAction
     {
         GameResult Execute(GameContext context);
     }

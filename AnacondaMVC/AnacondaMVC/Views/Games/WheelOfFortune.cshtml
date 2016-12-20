@@ -1,26 +1,5 @@
-﻿@Model AnacondaMVC.Games.GameResult
-
-@{
+﻿@{
     ViewBag.Title = "WheelOfFortune";
-
-    if (IsPost)
-    {
-        int bet = Request.Form["Bet"].AsInt();
-        int won = 0;
-
-        if (bet > 0)
-        {
-            Random rand = new Random();
-            //won = Math.Floor(bet * );
-        }
-
-        <text>
-            You bet: <br />
-            @bet credits <hr />
-            You won: <br />
-            @won credits <br />
-        </text>
-    }
 }
 
 <h2>Wheel of Fortune</h2>
@@ -29,4 +8,22 @@
 {
     @Html.TextBox("Bet", 1, new { @type = "number", @min = 1, @max = 100 });
     <input type="submit" value="Spin the wheel">
+}
+
+@{
+    if (IsPost)
+    {
+        if (Model.CreditsGained > 0)
+        {
+            <hr/>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    You won!
+                </div>
+                <div class="panel-body">
+                    @Model.CreditsGained Credits
+                </div>
+            </div>
+        }
+    }
 }
