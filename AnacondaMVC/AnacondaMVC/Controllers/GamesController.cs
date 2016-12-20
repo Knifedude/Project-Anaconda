@@ -34,7 +34,8 @@ namespace AnacondaMVC.Controllers
             var items = new List<RandomItem<ISpinAction>>
             {
                 new RandomItem<ISpinAction>(0.6, new BetMultiplier(0.5m)),
-                new RandomItem<ISpinAction>(0.3, new BetMultiplier(1.1m)),
+                new RandomItem<ISpinAction>(0.2, new BetMultiplier(1.1m)),
+                new RandomItem<ISpinAction>(0.1, new BetMultiplier(0m)),
                 new RandomItem<ISpinAction>(0.1 / 3, new BetMultiplier(1.5m)),
                 new RandomItem<ISpinAction>(0.1 / 3, new BetMultiplier(2m)),
                 new RandomItem<ISpinAction>(0.1 / 3, new BetMultiplier(3m))
