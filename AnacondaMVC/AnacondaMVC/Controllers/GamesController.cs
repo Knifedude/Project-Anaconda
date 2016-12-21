@@ -11,6 +11,7 @@ using AnacondaMVC.Models;
 using System.Security.Claims;
 using Microsoft.AspNet.Identity;
 using AnacondaMVC.Logic;
+using AnacondaGames.Games.SlotMachine;
 
 namespace AnacondaMVC.Controllers
 {
@@ -82,6 +83,67 @@ namespace AnacondaMVC.Controllers
         public ActionResult SlotMachineSimple()
         {
             return ViewWithMaxBet();
+        }
+
+        [HttpPost]
+        public ActionResult SlotMachineSimple(FormCollection collection)
+        {
+            int bet = collection["Bet"].AsInt();
+            GameResult result = new GameResult();
+
+            List<SlotItem>[] slotColumns = new List<SlotItem>[]
+            {
+                new List<SlotItem>(),
+                new List<SlotItem>(),
+                new List<SlotItem>()
+            };
+
+            RandomColumns rc = new RandomColumns();
+            Random rand = new Random();
+
+            for (int i = 0; i < 3; i++)
+            {
+                slotColumns[i] = rc.GetRandomColumnFruit(rand);
+            }
+
+            ViewBag.Column1Row1 = slotColumns[0][0].DisplayName;
+            ViewBag.Column1Row2 = slotColumns[0][1].DisplayName;
+            ViewBag.Column1Row3 = slotColumns[0][2].DisplayName;
+            ViewBag.Column2Row1 = slotColumns[1][0].DisplayName;
+            ViewBag.Column2Row2 = slotColumns[1][1].DisplayName;
+            ViewBag.Column2Row3 = slotColumns[1][2].DisplayName;
+            ViewBag.Column3Row1 = slotColumns[2][0].DisplayName;
+            ViewBag.Column3Row2 = slotColumns[2][1].DisplayName;
+            ViewBag.Column3Row3 = slotColumns[2][2].DisplayName;
+
+            var user = HttpContext.User.Identity as ClaimsIdentity;
+            var userId = user.GetUserId();
+
+            CheckRows cr = new CheckRows();
+
+            using (var anacondaModel = new AnacondaModel())
+            {
+                WalletDAO walletDAO = new WalletDAO(anacondaModel);
+                if (walletDAO.Pay(userId, bet))
+                {
+                    result = cr.WinResult(slotColumns, new GameContext(bet));
+                }
+                else
+                {
+                    result = new GameResult() { Bet = bet, CreditsGained = 0, Status = ResultStatus.InsufficientCredits };
+                }
+            }
+
+            using (var anacondaModel = new AnacondaModel())
+            {
+                var wallet = anacondaModel.Wallets.First(u => u.UserId == userId);
+                wallet.Credits += result.CreditsGained;
+                anacondaModel.SaveChanges();
+            }
+
+            ViewBag.Bet = bet;
+
+            return View(result);
         }
 
         private ActionResult ViewWithMaxBet()
