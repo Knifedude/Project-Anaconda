@@ -48,8 +48,6 @@ namespace AnacondaMVC.Controllers
             var rp = new RandomPicker<ISpinAction>(items, rand.Next());
 
             //TODO: rand.next gives the same order for each player, would be better to have a different order for each player
-
-            //TODO: communicate bet amount and fill in the bet field with it so the player can bet the same amount over and over easily
             
             //TODO: check if bet is not greater than total credits
                 result = rp.Pick().Item.Execute(new GameContext(bet));
