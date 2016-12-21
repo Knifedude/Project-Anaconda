@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Games\GameContext.cs" />
     <Compile Include="Games\GameResult.cs" />
+    <Compile Include="Games\SlotMachine\CheckRows.cs" />
     <Compile Include="Games\SlotMachine\RandomColumns.cs" />
     <Compile Include="Games\SlotMachine\SlotItem.cs" />
     <Compile Include="Games\WheelOfFortune\BetMultiplier.cs" />

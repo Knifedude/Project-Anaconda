@@ -291,6 +291,7 @@
     <Content Include="Views\Wallet\Index.cshtml" />
     <Content Include="Views\StaticContent\Index.cshtml" />
     <Content Include="Views\StaticContent\PageNotFound.cshtml" />
+    <Content Include="Views\Games\SlotMachineSimple.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
