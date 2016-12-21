@@ -67,5 +67,24 @@ namespace AnacondaMVC.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [ChildActionOnly]
+        public ActionResult PartialWallet()
+        {
+            var user = HttpContext.User.Identity as ClaimsIdentity;
+            var userId = user.GetUserId();
+
+            Wallet wal = null;
+            int totalCredits = 0;
+            using (var am = new AnacondaModel())
+            {
+                wal = am.Wallets.First(w => w.UserId == userId);
+                totalCredits = wal.Credits + wal.CasinoCredits;
+            }
+
+            ViewBag.TotalCredits = totalCredits.ToString();
+
+            return PartialView();
+        }
     }
 }

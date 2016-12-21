@@ -198,7 +198,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\RouletteController.cs" />
     <Compile Include="Controllers\StaticContentController.cs" />
     <Compile Include="Controllers\WalletController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
@@ -294,6 +293,7 @@
     <Content Include="Views\StaticContent\PageNotFound.cshtml" />
     <Content Include="Views\Games\SlotMachineSimple.cshtml" />
     <Content Include="Views\Roulette\Index.cshtml" />
+    <Content Include="Views\Wallet\PartialWallet.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
