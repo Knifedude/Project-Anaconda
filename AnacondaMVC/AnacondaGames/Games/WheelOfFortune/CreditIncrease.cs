@@ -16,9 +16,7 @@ namespace AnacondaMVC.Games.WheelOfFortune
 
         public GameResult Execute(GameContext context)
         {
-            //TODO: Increase player credits with _creditsBonus
-
-            return new GameResult() { CreditsGained = _creditsBonus };
+            return new GameResult() { CreditsGained = _creditsBonus, Bet = context.Bet };
         }
     }
 }

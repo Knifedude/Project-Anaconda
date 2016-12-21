@@ -16,5 +16,7 @@ namespace AnacondaMVC.Games
         public int ExperienceGained { get; set; }
 
         public decimal ExperienceMultiplier { get; set; }
+
+        public int Bet { get; set; }
     }
 }
