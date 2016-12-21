@@ -85,9 +85,8 @@ namespace AnacondaMVC.Logic
                 }
                 else
                 {
-                    var diff = Math.Abs(wallet.CasinoCredits - pay);
-                    wallet.CasinoCredits -= diff;
-                    toPay -= diff;
+                    toPay -= wallet.CasinoCredits;
+                    wallet.CasinoCredits = 0;
                 }
 
                 wallet.Credits -= toPay;
