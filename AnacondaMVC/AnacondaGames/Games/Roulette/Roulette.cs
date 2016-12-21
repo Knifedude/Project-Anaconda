@@ -19,13 +19,18 @@ namespace AnacondaGames.Games.Roulette
            
         }
 
+        public IEnumerable<string> GetBetTypes()
+        {
+            return _betTypes.Keys;
+        }
+
         public Roulette(RoulletteBoard board, Random random)
         {
             _board = board;
             _random = random;
             _betTypes = new Dictionary<string, BetType>();
 
-            for (var i = 1; i < 36; i++)
+            for (var i = 0; i < 36; i++)
             {
                 _betTypes[Convert.ToString(i)] = new BetType(36, sp => sp.Number == i);
             }
@@ -87,7 +92,7 @@ namespace AnacondaGames.Games.Roulette
 
         public class RoulletteBoard
         {
-            private const int BOARD_SIZE = 36;
+            private const int BOARD_SIZE = 37;
             private Color[] _tiles;
 
             public RoulletteBoard()

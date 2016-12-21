@@ -1,0 +1,89 @@
+﻿@using AnacondaGames.Games.Roulette
+@model Roulette
+
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>Roulette</h2>
+
+
+<div class="row">
+    <div class="input-group col-md-2">
+        <span class="input-group-addon" >Bet</span>
+        <input type="number" class="form-control" placeholder="Your bet">
+    </div>
+    <div class="col-md-2">
+        <button id="placeBetButton" class="btn btn-default" >Place Bet</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <div class="form-group">
+            <select id="bet-type-options" onchange="betchange()" class="form-control">
+                @foreach (var betType in @Model.GetBetTypes())
+                {
+                    int num = 0;
+                    if (!int.TryParse(betType, out num))
+                    {
+                        <option class="bet-type-option"><a href="#">@betType</a></option>
+                    }
+
+                }
+                <option id="numberItem"><a href="#">Number</a></option>
+            </select>
+        </div>
+    </div>
+    <div id="numberDiv" class="col-md-2" hidden>
+        <input type="number" class="form-control" placeholder="Number" min="0" max="36">
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    
+    <script>
+        function betchange() {
+
+            var e = $("#bet-type-options option:selected").html();
+            console.log(e);
+
+            if (e === "Number") {
+                $("#numberDiv").show();
+            } else {
+                $("#numberDiv").hide();
+            }
+
+
+            
+        }
+       
+
+      
+
+
+     
+
+//        $(document).ready(function() {
+//           
+//            for (var betTypeElement in $('.bet-type')) {
+//                betTypeElement.on('click', function() {
+//
+//                    if (isNaN(betTypeElement.text())) {
+//
+//                    } else {
+//                        
+//                    }
+//                });
+//            }
+//
+//        });
+
+    </script>
+
+    
+}
