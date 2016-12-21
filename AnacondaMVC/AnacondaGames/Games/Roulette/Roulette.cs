@@ -9,40 +9,41 @@ namespace AnacondaGames.Games.Roulette
 {
     public class Roulette
     {
-        private Dictionary<string, BetType> betTypes;
+        private Dictionary<string, BetType> _betTypes;
 
-        private Random random;
+        private Random _random;
         private RoulletteBoard _board;
 
-        public Roulette() : this(RoulletteBoard.CreateDefault())
+        public Roulette(Random random) : this(RoulletteBoard.CreateDefault(), random)
         {
            
         }
 
-        public Roulette(RoulletteBoard board)
+        public Roulette(RoulletteBoard board, Random random)
         {
             _board = board;
-            betTypes = new Dictionary<string, BetType>();
+            _random = random;
+            _betTypes = new Dictionary<string, BetType>();
 
             for (var i = 1; i < 36; i++)
             {
-                betTypes[Convert.ToString(i)] = new BetType(36, sp => sp.Number == i);
+                _betTypes[Convert.ToString(i)] = new BetType(36, sp => sp.Number == i);
             }
 
-            betTypes["black"] = new BetType(2, sp => sp.Color == Color.Black);
-            betTypes["red"] = new BetType(2, sp => sp.Color == Color.Red);
-            betTypes["odd"] = new BetType(2, sp => sp.Number != 0 && (sp.Number % 2 != 0));
-            betTypes["even"] = new BetType(2, sp => sp.Number != 0 && (sp.Number % 2 == 0));
-            betTypes["1st 12"] = new BetType(3, sp => sp.Number >= 1 && sp.Number <= 12);
-            betTypes["2nd 12"] = new BetType(3, sp => sp.Number >= 13 && sp.Number <= 24);
-            betTypes["3rd 12"] = new BetType(3, sp => sp.Number >= 25 && sp.Number <= 36);
+            _betTypes["black"] = new BetType(2, sp => sp.Color == Color.Black);
+            _betTypes["red"] = new BetType(2, sp => sp.Color == Color.Red);
+            _betTypes["odd"] = new BetType(2, sp => sp.Number != 0 && (sp.Number % 2 != 0));
+            _betTypes["even"] = new BetType(2, sp => sp.Number != 0 && (sp.Number % 2 == 0));
+            _betTypes["1st 12"] = new BetType(3, sp => sp.Number >= 1 && sp.Number <= 12);
+            _betTypes["2nd 12"] = new BetType(3, sp => sp.Number >= 13 && sp.Number <= 24);
+            _betTypes["3rd 12"] = new BetType(3, sp => sp.Number >= 25 && sp.Number <= 36);
 
-            betTypes["1st Col"] = new BetType(3, sp => sp.Number != 0 && (sp.Number + 2) % 3 == 0);
-            betTypes["2nd Col"] = new BetType(3, sp => sp.Number != 0 && (sp.Number + 1) % 3 == 0);
-            betTypes["3rd Col"] = new BetType(3, sp => sp.Number != 0 && sp.Number % 3 == 0);
+            _betTypes["1st Col"] = new BetType(3, sp => sp.Number != 0 && (sp.Number + 2) % 3 == 0);
+            _betTypes["2nd Col"] = new BetType(3, sp => sp.Number != 0 && (sp.Number + 1) % 3 == 0);
+            _betTypes["3rd Col"] = new BetType(3, sp => sp.Number != 0 && sp.Number % 3 == 0);
 
-            betTypes["1 to 18"] = new BetType(2, sp => sp.Number >= 1 && sp.Number <= 18);
-            betTypes["19 to 36"] = new BetType(2, sp => sp.Number >= 19 && sp.Number <= 36);
+            _betTypes["1 to 18"] = new BetType(2, sp => sp.Number >= 1 && sp.Number <= 18);
+            _betTypes["19 to 36"] = new BetType(2, sp => sp.Number >= 19 && sp.Number <= 36);
         }
 
 
@@ -51,17 +52,37 @@ namespace AnacondaGames.Games.Roulette
             // Validate Bets
             foreach (var bet in bets)
             {
-                if (!betTypes.ContainsKey(bet.Type))
+                if (!_betTypes.ContainsKey(bet.Type))
                 {
                     throw new InvalidBetException("Invalid bet type '" + bet.Type + "'");
                 }
             }
 
+            var spin = _random.Next(0, 36);
+            var spinResult = new RouletteSpinResult(_board.GetColor(spin), spin);
 
 
+            var winningBets = new List<WinningBet>();
 
+            foreach (var betsByType in bets.GroupBy(u => u.Type))
+            {
 
-            return null;
+                var betType = _betTypes[betsByType.Key];
+
+                if (betType.IsWinningMethod.Invoke(spinResult))
+                {
+
+                    var payout = betsByType.Sum(bet => bet.Credits*betType.Multiplier);
+                    var winningBet = new WinningBet()
+                    {
+                        AppliedMultiplier = betType.Multiplier,
+                        Credits = betsByType.First().Credits,
+                        Payout = payout
+                    };
+                    winningBets.Add(winningBet);
+                }
+            }
+            return winningBets;
         }
 
         public class RoulletteBoard
@@ -85,6 +106,11 @@ namespace AnacondaGames.Games.Roulette
                 {
                     _tiles[n] = color;
                 }
+            }
+
+            public Color GetColor(int number)
+            {
+                return _tiles[number];
             }
 
             public static RoulletteBoard CreateDefault()
@@ -125,6 +151,11 @@ namespace AnacondaGames.Games.Roulette
 
     public class RouletteSpinResult
     {
+        public RouletteSpinResult(Color color, int number)
+        {
+            Color = color;
+            Number = number;
+        }
 
         public Color Color { get; set; }
 
@@ -147,7 +178,10 @@ namespace AnacondaGames.Games.Roulette
         public BetType(int multiplier, IsWinning winning)
         {
             Multiplier = multiplier;
+            IsWinningMethod = winning;
         }
+
+        public IsWinning IsWinningMethod { get; }
 
         public int Multiplier { get; set; }
 

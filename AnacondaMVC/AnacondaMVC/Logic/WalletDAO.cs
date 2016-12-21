@@ -75,7 +75,7 @@ namespace AnacondaMVC.Logic
 
             var wallet = GetWallet(userId);
 
-            if ((wallet.CasinoCredits + wallet.Credits) > pay)
+            if ((wallet.CasinoCredits + wallet.Credits) >= pay)
             {
                 var toPay = pay;
                 if (wallet.CasinoCredits >= pay)
