@@ -198,6 +198,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\RouletteController.cs" />
     <Compile Include="Controllers\StaticContentController.cs" />
     <Compile Include="Controllers\WalletController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
@@ -206,8 +207,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Logic\WalletDAO.cs" />
-    <Compile Include="Logic\UserNotFoundException.cs" />
+    <Compile Include="DAO\WalletDAO.cs" />
+    <Compile Include="DAO\UserNotFoundException.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AnacondaModel.cs" />
     <Compile Include="Models\AspNetRole.cs" />
@@ -292,6 +293,7 @@
     <Content Include="Views\StaticContent\Index.cshtml" />
     <Content Include="Views\StaticContent\PageNotFound.cshtml" />
     <Content Include="Views\Games\SlotMachineSimple.cshtml" />
+    <Content Include="Views\Roulette\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
