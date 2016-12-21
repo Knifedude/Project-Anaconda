@@ -203,6 +203,8 @@
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Logic\UserNotFoundException.cs" />
+    <Compile Include="Logic\WalletDAO.cs" />
     <Compile Include="DAO\UserNotFoundException.cs" />
     <Compile Include="DAO\WalletDAO.cs" />
     <Compile Include="Global.asax.cs">
