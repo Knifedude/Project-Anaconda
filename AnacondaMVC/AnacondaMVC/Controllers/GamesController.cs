@@ -7,9 +7,13 @@ using AnacondaMVC.Games;
 using System.Web.WebPages;
 using AnacondaGames.Games.WheelOfFortune;
 using AnacondaMVC.Games.WheelOfFortune;
+using AnacondaMVC.Models;
+using System.Security.Claims;
+using Microsoft.AspNet.Identity;
 
 namespace AnacondaMVC.Controllers
 {
+    [Authorize]
     public class GamesController : Controller
     {
         // GET: Games
@@ -21,7 +25,7 @@ namespace AnacondaMVC.Controllers
         // GET: Wheel of Fortune
         public ActionResult WheelOfFortune()
         {
-            return View();
+            return View(new GameResult() { Bet = 100 });
         }
 
         // POST: Wheel of Fortune
@@ -44,8 +48,21 @@ namespace AnacondaMVC.Controllers
             var rp = new RandomPicker<ISpinAction>(items, rand.Next());
 
             //TODO: rand.next gives the same order for each player, would be better to have a different order for each player
+            
+            //TODO: check if bet is not greater than total credits
+                result = rp.Pick().Item.Execute(new GameContext(bet));
 
-            result = rp.Pick().Item.Execute(new GameContext() { Bet = bet });
+            var user = HttpContext.User.Identity as ClaimsIdentity;
+            var userId = user.GetUserId();
+
+            using (var anacondaModel = new AnacondaModel())
+            {
+                var wallet = anacondaModel.Wallets.First(u => u.UserId == userId);
+                wallet.Credits += result.CreditsGained;
+                anacondaModel.SaveChanges();
+            }
+
+            ViewBag.Bet = bet;
 
             return View(result);
         }

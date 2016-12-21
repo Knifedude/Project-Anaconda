@@ -8,5 +8,10 @@ namespace AnacondaMVC.Games
     public class GameContext
     {
         public int Bet { get; set; }
+
+        public GameContext(int bet)
+        {
+            Bet = bet;
+        }
     }
 }
