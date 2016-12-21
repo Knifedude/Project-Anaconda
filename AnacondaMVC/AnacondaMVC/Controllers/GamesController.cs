@@ -65,7 +65,10 @@ namespace AnacondaMVC.Controllers
                 {
                     result = new GameResult() { Bet = bet, CreditsGained = 0, Status = ResultStatus.InsufficientCredits };
                 }
+            }
 
+            using (var anacondaModel = new AnacondaModel())
+            {
                 var wallet = anacondaModel.Wallets.First(u => u.UserId == userId);
                 wallet.Credits += result.CreditsGained;
                 anacondaModel.SaveChanges();
@@ -129,7 +132,7 @@ namespace AnacondaMVC.Controllers
                 {
                     result = new GameResult() { Bet = bet, CreditsGained = 0, Status = ResultStatus.InsufficientCredits };
                 }
-
+           
                 var wallet = anacondaModel.Wallets.First(u => u.UserId == userId);
                 wallet.Credits += result.CreditsGained;
                 anacondaModel.SaveChanges();
