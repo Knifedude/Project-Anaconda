@@ -2,23 +2,50 @@
 @model GameResult
 
 @{
-    ViewBag.Title = "WheelOfFortune";
+    ViewBag.Title = "SlotMachineSimple";
 }
 
-<h2>Wheel of Fortune</h2>
+<h2>Slotmachine - Simple</h2>
 
 @using (Html.BeginForm())
 {
     <div class="input-group">
         <span class="input-group-addon" id="basic-addon1">Bet</span>
         @Html.TextBox("Bet", (int)Model.Bet, new { @type = "number", @min = 1, @max = ViewBag.MaxBet, @class = "form-control", @placeholder = "100 credits" })
-        <input type="submit" value="Spin the wheel" class="btn btn-primary" style="margin-left:5px;">
+        <input type="submit" value="Pull the lever" class="btn btn-primary" style="margin-left:5px;">
     </div>
 }
 
 @{
     if (IsPost)
     {
+        <hr />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Column 1</th>
+                    <th>Column 2</th>
+                    <th>Column 3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@ViewBag.Column1Row1</td>
+                    <td>@ViewBag.Column1Row2</td>
+                    <td>@ViewBag.Column1Row3</td>
+                </tr>
+                <tr>
+                    <td>@ViewBag.Column2Row1</td>
+                    <td>@ViewBag.Column2Row2</td>
+                    <td>@ViewBag.Column2Row3</td>
+                </tr>
+                <tr>
+                    <td>@ViewBag.Column3Row1</td>
+                    <td>@ViewBag.Column3Row2</td>
+                    <td>@ViewBag.Column3Row3</td>
+                </tr>
+            </tbody>
+        </table>
         <hr />
         if (Model.CreditsGained > 0)
         {

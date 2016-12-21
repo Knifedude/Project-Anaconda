@@ -26,9 +26,7 @@ namespace AnacondaGames.Games.WheelOfFortune
                 gainedCredits = (int)Math.Floor(context.Bet * _creditsMultiplier);
             }
 
-            //TODO: Add the credits to the wallet of the user
-
-            return new GameResult() { CreditsGained = gainedCredits };
+            return new GameResult() { CreditsGained = gainedCredits, Bet = context.Bet };
         }
     }
 }

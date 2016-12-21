@@ -9,7 +9,7 @@ namespace AnacondaGames.Games.SlotMachine
 {
     public class RandomColumns
     {
-        public List<SlotItem> GetRandomColumnFruit()
+        public List<SlotItem> GetRandomColumnFruit(Random rand)
         {
             var items = new List<RandomItem<SlotItem>>
             {
@@ -20,7 +20,6 @@ namespace AnacondaGames.Games.SlotMachine
                 new RandomItem<SlotItem>(0.2, new SlotItem("Raspberry", 0.2)),
                 new RandomItem<SlotItem>(0.2, new SlotItem("Strawberry", 0.15))
             };
-            Random rand = new Random();
             var randomPicker = new RandomPicker<SlotItem>(items, rand.Next());
 
             List<SlotItem> slotItems = new List<SlotItem>();

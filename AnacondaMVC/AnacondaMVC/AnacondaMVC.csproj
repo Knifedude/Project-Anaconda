@@ -198,6 +198,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\RouletteController.cs" />
+    <Compile Include="Controllers\StaticContentController.cs" />
     <Compile Include="Controllers\WalletController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -205,6 +207,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="DAO\WalletDAO.cs" />
+    <Compile Include="DAO\UserNotFoundException.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AnacondaModel.cs" />
     <Compile Include="Models\AspNetRole.cs" />
@@ -223,6 +227,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\aspnet-AnacondaMVC-20161219112624_log.ldf" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -285,10 +290,13 @@
     <Content Include="Views\Games\Index.cshtml" />
     <Content Include="Views\Games\WheelOfFortune.cshtml" />
     <Content Include="Views\Wallet\Index.cshtml" />
+    <Content Include="Views\StaticContent\Index.cshtml" />
+    <Content Include="Views\StaticContent\PageNotFound.cshtml" />
+    <Content Include="Views\Games\SlotMachineSimple.cshtml" />
+    <Content Include="Views\Roulette\Index.cshtml" />
+    <Content Include="Views\Wallet\PartialWallet.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

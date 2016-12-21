@@ -5,6 +5,13 @@ using System.Web;
 
 namespace AnacondaMVC.Games
 {
+    public enum ResultStatus
+    {
+        Succes,
+        InsufficientCredits,
+        Failed
+    }
+
     public class GameResult
     {
         public int CreditsGained { get; set; }
@@ -16,5 +23,9 @@ namespace AnacondaMVC.Games
         public int ExperienceGained { get; set; }
 
         public decimal ExperienceMultiplier { get; set; }
+
+        public int Bet { get; set; }
+
+        public ResultStatus Status { get; set; }
     }
 }

@@ -21,16 +21,17 @@ namespace AnacondaMVC.Controllers
                 var user = HttpContext.User.Identity as ClaimsIdentity;
                 var userId = user.GetUserId();
 
-                Wallet wallet = am.Wallets.First(x => x.UserId.Equals(userId));
+                bool hasWallet = am.Wallets.Any(x => x.UserId.Equals(userId));
+                Wallet wallet;
 
-                if (wallet == null)
+                if (!hasWallet)
                 {
 
                     var aspUser = am.AspNetUsers.First(u => u.Id.Equals(userId));
 
 
                     wallet = new Wallet()
-                    { 
+                    {
                         AspNetUser = aspUser,
                         CasinoCredits = 100,
                         Credits = 0,
@@ -40,7 +41,8 @@ namespace AnacondaMVC.Controllers
                     am.SaveChanges();
                 }
 
-
+                wallet = am.Wallets.First(x => x.UserId.Equals(userId));
+                
                 return View(wallet);
             }
 
@@ -64,6 +66,25 @@ namespace AnacondaMVC.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        [ChildActionOnly]
+        public ActionResult PartialWallet()
+        {
+            var user = HttpContext.User.Identity as ClaimsIdentity;
+            var userId = user.GetUserId();
+
+            Wallet wal = null;
+            int totalCredits = 0;
+            using (var am = new AnacondaModel())
+            {
+                wal = am.Wallets.First(w => w.UserId == userId);
+                totalCredits = wal.Credits + wal.CasinoCredits;
+            }
+
+            ViewBag.TotalCredits = totalCredits.ToString();
+
+            return PartialView();
         }
     }
 }
