@@ -10,6 +10,7 @@ using AnacondaMVC.Games.WheelOfFortune;
 using AnacondaMVC.Models;
 using System.Security.Claims;
 using Microsoft.AspNet.Identity;
+using AnacondaMVC.Logic;
 
 namespace AnacondaMVC.Controllers
 {
@@ -25,7 +26,7 @@ namespace AnacondaMVC.Controllers
         // GET: Wheel of Fortune
         public ActionResult WheelOfFortune()
         {
-            return View(new GameResult() { Bet = 100 });
+            return ViewWithMaxBet();
         }
 
         // POST: Wheel of Fortune
@@ -48,12 +49,22 @@ namespace AnacondaMVC.Controllers
             var rp = new RandomPicker<ISpinAction>(items, rand.Next());
 
             //TODO: rand.next gives the same order for each player, would be better to have a different order for each player
-            
-            //TODO: check if bet is not greater than total credits
-                result = rp.Pick().Item.Execute(new GameContext(bet));
 
             var user = HttpContext.User.Identity as ClaimsIdentity;
             var userId = user.GetUserId();
+
+            using (var anacondaModel = new AnacondaModel())
+            {
+                WalletDAO walletDAO = new WalletDAO(anacondaModel);
+                if (walletDAO.Pay(userId, bet))
+                {
+                    result = rp.Pick().Item.Execute(new GameContext(bet));
+                }
+                else
+                {
+                    result = new GameResult() { Bet = bet, CreditsGained = 0, Status = ResultStatus.InsufficientCredits };
+                }
+            }
 
             using (var anacondaModel = new AnacondaModel())
             {
@@ -66,5 +77,33 @@ namespace AnacondaMVC.Controllers
 
             return View(result);
         }
+
+        // GET: Slotmachine - Simple
+        public ActionResult SlotMachineSimple()
+        {
+            return ViewWithMaxBet();
+        }
+
+        private ActionResult ViewWithMaxBet()
+        {
+            var user = HttpContext.User.Identity as ClaimsIdentity;
+            var userId = user.GetUserId();
+
+            using (var anacondaModel = new AnacondaModel())
+            {
+                WalletDAO walletDAO = new WalletDAO(anacondaModel);
+                if (walletDAO.HasWallet(userId))
+                {
+                    Wallet wallet = walletDAO.GetWallet(userId);
+                    ViewBag.MaxBet = wallet.Credits + wallet.CasinoCredits;
+                }
+                else
+                {
+                    ViewBag.MaxBet = int.MaxValue;
+                }
+            }
+
+            return View(new GameResult() { Bet = 100 });
+        } 
     }
 }

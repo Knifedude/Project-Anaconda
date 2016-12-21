@@ -1,4 +1,7 @@
-﻿@{
+﻿@using AnacondaMVC.Games
+@model GameResult
+
+@{
     ViewBag.Title = "WheelOfFortune";
 }
 
@@ -8,7 +11,7 @@
 {
     <div class="input-group">
         <span class="input-group-addon" id="basic-addon1">Bet</span>
-        @Html.TextBox("Bet", (int)Model.Bet, new { @type = "number", @min = 1, @max = 100000, @class = "form-control", @placeholder = "100 credits" })
+        @Html.TextBox("Bet", (int)Model.Bet, new { @type = "number", @min = 1, @max = ViewBag.MaxBet, @class = "form-control", @placeholder = "100 credits" })
         <input type="submit" value="Spin the wheel" class="btn btn-primary" style="margin-left:5px;">
     </div>
 }
@@ -26,6 +29,13 @@
                 <div class="panel-body">
                     @Model.CreditsGained Credits
                 </div>
+            </div>
+        }
+        else if (Model.Status == ResultStatus.InsufficientCredits)
+        {
+            <div class="alert alert-info" role="alert">
+                <strong>Uh oh</strong>
+                Looks like you don't have enough credits to bet that much...
             </div>
         }
         else
