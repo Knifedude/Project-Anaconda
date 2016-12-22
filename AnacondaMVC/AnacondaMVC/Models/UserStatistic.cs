@@ -21,7 +21,7 @@ namespace AnacondaMVC.Models
         {
             get
             {
-                int level = 1;
+                int level = 0;
                 level += (int)Math.Floor(Experience / 1000d);
                 return level;
             }
