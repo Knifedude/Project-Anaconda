@@ -299,6 +299,7 @@
     <Content Include="Views\Wallet\PartialWallet.cshtml" />
     <Content Include="Views\PlayerStatistics\Index.cshtml" />
     <Content Include="Views\PlayerStatistics\PartialXP.cshtml" />
+    <Content Include="Views\PlayerStatistics\Leaderboard.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

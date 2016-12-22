@@ -1,0 +1,68 @@
+﻿@model IEnumerable<AnacondaMVC.Models.UserStatistic>
+
+@{
+    ViewBag.Title = "Leaderboard";
+}
+
+<h2>Leaderboard</h2>
+
+@using (Html.BeginForm("Leaderboard", "PlayerStatistics", FormMethod.Get))
+{
+    <div class="col-md-3">
+        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control", @placeholder = "Search for..." })
+    </div>
+    <div class="col-md-2">
+        <input type="submit" class="btn btn-default" value="Search!" />
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink("Username", "Leaderboard", new { sortOrder = ViewBag.UserNameSortParm, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("Experience", "Leaderboard", new { sortOrder = ViewBag.XPSortParm, currentFilter = ViewBag.CurrentFilter })
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr @if (user.AspNetUser.Id == ViewBag.UserId) { @Html.Raw(" class='info'"); }>
+                <td>
+                    @user.AspNetUser.UserName
+                </td>
+                <td>
+                    @user.Experience
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+
+Page @(ViewBag.PageCount < ViewBag.PageNumber ? 0 : ViewBag.PageNumber) of @ViewBag.PageCount
+
+<br />
+
+@if (ViewBag.PageCount > 1)
+{
+    @Html.ActionLink("<", "Leaderboard", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page = 1 }, new { @class = "btn btn-default" })
+
+    for (int i = Math.Max(ViewBag.PageNumber - 5, 1); i <= Math.Min(ViewBag.PageNumber + 5, ViewBag.PageCount); i++)
+    {
+        if (ViewBag.PageNumber == i)
+        {
+            @Html.ActionLink(i.ToString(), "Leaderboard", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page = i }, new { @class = "btn btn-primary" });
+        }
+        else
+        {
+            @Html.ActionLink(i.ToString(), "Leaderboard", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page = i }, new { @class = "btn btn-default" });
+        }
+    }
+
+    @Html.ActionLink(">", "Leaderboard", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page = ViewBag.PageCount }, new { @class = "btn btn-default" })
+}
