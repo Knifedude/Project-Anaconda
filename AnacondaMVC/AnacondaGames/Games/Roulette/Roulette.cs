@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using AnacondaMVC.Games;
 
 namespace AnacondaGames.Games.Roulette
 {
@@ -52,7 +53,7 @@ namespace AnacondaGames.Games.Roulette
         }
 
 
-        public ICollection<WinningBet> Spin(ICollection<Bet> bets)
+        public RouletteResultModel Spin(ICollection<Bet> bets)
         {
             // Validate Bets
             foreach (var bet in bets)
@@ -63,32 +64,58 @@ namespace AnacondaGames.Games.Roulette
                 }
             }
 
+            var model = new RouletteResultModel();
             var spin = _random.Next(0, 36);
             var spinResult = new RouletteSpinResult(_board.GetColor(spin), spin);
+
+            model.Number = spin;
+            model.Color = spinResult.Color;
+
 
 
             var winningBets = new List<WinningBet>();
 
-            foreach (var betsByType in bets.GroupBy(u => u.Type))
+            foreach (var bet in bets)
             {
-
-                var betType = _betTypes[betsByType.Key];
+                var betType = _betTypes[bet.Type];
 
                 if (betType.IsWinningMethod.Invoke(spinResult))
                 {
 
-                    var payout = betsByType.Sum(bet => bet.Credits*betType.Multiplier);
+                    var payout = bet.Credits * betType.Multiplier;
                     var winningBet = new WinningBet()
                     {
                         AppliedMultiplier = betType.Multiplier,
-                        Credits = betsByType.First().Credits,
-                        Payout = payout
+                        Credits = bet.Credits,
+                        Payout = payout,
+                        Type = bet.Type,
+                        Number = bet.Number
+
                     };
                     winningBets.Add(winningBet);
                 }
             }
-            return winningBets;
+
+            model.WinningBets = winningBets;
+
+            return model;
         }
+
+
+
+        public class RouletteResultModel
+        {
+
+            public int Number { get; set; }
+
+            public Color Color { get; set; }
+
+            public List<WinningBet> WinningBets { get; set; }
+
+            public ResultStatus Status { get; set; }
+
+        }
+
 
         public class RoulletteBoard
         {
@@ -146,6 +173,8 @@ namespace AnacondaGames.Games.Roulette
 
     public class Bet
     {
+
+        public int Number { get; set; }
         
         public string Type { get; set; }
 
