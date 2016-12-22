@@ -1,0 +1,10 @@
+﻿@using AnacondaMVC.Models
+@model UserStatistic
+
+@{
+    ViewBag.Title = "PartialXP";
+}
+
+<li>
+    <a href="@Url.Action("Index", "PlayerStatistics")">@Model.Experience <span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
+</li>

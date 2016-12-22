@@ -68,6 +68,8 @@ namespace AnacondaMVC.Controllers
             
                 var wallet = anacondaModel.Wallets.First(u => u.UserId == userId);
                 wallet.Credits += result.CreditsGained;
+                var userStats = anacondaModel.UserStatistics.First(s => s.Id == userId);
+                userStats.Experience += 100;
                 anacondaModel.SaveChanges();
             }
 
@@ -132,6 +134,8 @@ namespace AnacondaMVC.Controllers
            
                 var wallet = anacondaModel.Wallets.First(u => u.UserId == userId);
                 wallet.Credits += result.CreditsGained;
+                var userStats = anacondaModel.UserStatistics.First(s => s.Id == userId);
+                userStats.Experience += 100;
                 anacondaModel.SaveChanges();
             }
 
