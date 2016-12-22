@@ -12,10 +12,10 @@
 <div class="row">
     <div class="input-group col-md-2">
         <span class="input-group-addon" >Bet</span>
-        <input type="number" class="form-control" placeholder="Your bet">
+        <input  id="credits-bet-text" type="number" class="form-control" placeholder="Your bet">
     </div>
     <div class="col-md-2">
-        <button id="placeBetButton" class="btn btn-default" >Place Bet</button>
+        <button id="place-bet-button" class="btn btn-default" >Place Bet</button>
     </div>
 </div>
 <div class="row">
@@ -36,37 +36,156 @@
         </div>
     </div>
     <div id="numberDiv" class="col-md-2" hidden>
-        <input type="number" class="form-control" placeholder="Number" min="0" max="36">
+        <input id="bet-number" type="number" class="form-control" placeholder="Number" min="0" max="36">
     </div>
+</div>
+
+<div id="error-message" class="alert alert-danger alert-dismissible" role="alert" hidden>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong id="error-message-strong"></strong><p id="error-message-text"></p>
+</div>
+
+
+<div class="row">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Type</th>  
+            <th>Credits Bet</th>
+        </tr>
+        </thead>
+        <tbody id="betting-table">
+                
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <input type="submit" class="btn btn-primary" id="submit-bets"/>
 </div>
 
 
 
-
-
 @section Scripts {
-    
+
     <script>
         function betchange() {
 
             var e = $("#bet-type-options option:selected").html();
-            console.log(e);
 
             if (e === "Number") {
                 $("#numberDiv").show();
             } else {
                 $("#numberDiv").hide();
             }
+        }
 
+        function showError(errorMessage, boldMessage) {
 
             
+
+            if (boldMessage == undefined) {
+                $('#error-message-strong').text('');
+            } else {
+                $('#error-message-strong').text(boldMessage);
+            }
+            
+            $('#error-message-text').text(errorMessage);
+            $('#error-message').show();
         }
-       
 
-      
+        $(document)
+            .ready(function () {
+
+                $('#submit-bets').on('click', function() {
+                    var rows = $('.bet-type-row');
 
 
-     
+                    var bets = [];
+                    var index = 0;
+                    $(rows).each(function(i, item) {
+                        var bet = {};
+                        bet.Type = $(item.childNodes[0]).text();
+                        bet.Credits = Number($(item.childNodes[1]).text());
+                        bets[index++] = bet;
+                    });
+
+
+                    console.log(bets);
+                    console.log(JSON.stringify(bets));
+
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("PlaceBets")",
+                        success: function() {
+                            console.log('succesfully posted data!');
+
+                            $(rows)
+                                .each(function (i, item) {
+                                    item.remove();
+                                });
+
+                            // TODO create nice message for user
+                        },
+                        data: JSON.stringify(bets),
+                        contentType: 'application/json'
+                    });
+
+
+                    
+
+//
+//                    for (var i = 0; i < rows.length; i++) {
+//                        var row = rows[i];
+//
+//                        row.
+//
+//                    }
+
+
+                }); 
+
+                $('#place-bet-button')
+                    .on('click',
+                        function() {
+
+                            var betType = $("#bet-type-options option:selected").text();
+
+                            if (betType == 'Number') {
+
+                                var number = $('#bet-number').val();
+
+                                if (number > 36 || number < 0) {
+                                    showError("Number must be between 0 and 36", "Oh snap!");
+                                    return;
+                                }
+
+                                betType += '-' + number;
+                            }
+
+                            var credits = $('#credits-bet-text').val();
+
+                            if (credits > 0) {
+                                var existingCredits = $('#val-' + betType.replace(' ', '-')).text();
+
+                                if (existingCredits != undefined) {
+
+                                    $('#' + betType.replace(' ', '-') + "-row").remove();
+
+                                    if (!isNaN(existingCredits)) {
+                                        credits = Number(credits) + Number(existingCredits);
+                                    }
+                                }
+
+
+                                var row = "<tr class='bet-type-row' id='" + betType.replace(' ', '-') + "-row'><td>" + betType + "</td><td id='val-" + betType.replace(' ', '-') + "'>" + credits + "</td></tr>";
+                                $('#betting-table').append(row);
+
+                            }
+                        });
+            });
+
+
 
 //        $(document).ready(function() {
 //           
@@ -85,5 +204,5 @@
 
     </script>
 
-    
+
 }

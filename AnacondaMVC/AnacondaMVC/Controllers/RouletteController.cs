@@ -13,6 +13,21 @@ namespace AnacondaMVC.Controllers
         // GET: Roulette
         public ActionResult Index()
         {
+            Roulette roulette = GetRoulette();
+            return View(roulette);
+        }
+
+        [HttpPost]
+        public void PlaceBets(List<Bet> collection)
+        {
+
+            Roulette roulette = GetRoulette();
+            
+
+        }
+
+        private Roulette GetRoulette()
+        {
             Roulette roulette;
 
             if (HttpContext.Session["roulette"] == null)
@@ -23,9 +38,14 @@ namespace AnacondaMVC.Controllers
             }
             else
             {
-                roulette = (Roulette) HttpContext.Session["roulette"];
+                roulette = (Roulette)HttpContext.Session["roulette"];
             }
-            return View(roulette);
+            return roulette;
+
         }
+
+
+
+
     }
 }
