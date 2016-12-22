@@ -30,7 +30,7 @@
     <tbody>
         @foreach (var user in Model)
         {
-            <tr>
+            <tr @if (user.AspNetUser.Id == ViewBag.UserId) { @Html.Raw(" class='info'"); }>
                 <td>
                     @user.AspNetUser.UserName
                 </td>

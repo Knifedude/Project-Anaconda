@@ -40,6 +40,8 @@ namespace AnacondaMVC.Controllers
             var user = HttpContext.User.Identity as ClaimsIdentity;
             var userId = user.GetUserId();
 
+            ViewBag.UserId = userId;
+
             ViewBag.SortOrder = sortOrder;
             ViewBag.UserNameSortParm = String.IsNullOrEmpty(sortOrder) ? "username_desc" : "";
             ViewBag.XPSortParm = sortOrder == "xp" ? "xp_desc" : "xp";
@@ -80,7 +82,7 @@ namespace AnacondaMVC.Controllers
                         break;
                 }
 
-                int pageSize = 2;
+                int pageSize = 5;
                 int pageNumber = (page ?? 1);
 
                 ViewBag.PageNumber = pageNumber;
