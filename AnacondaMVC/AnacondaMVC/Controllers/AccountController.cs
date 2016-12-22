@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AnacondaMVC.Models;
+using AnacondaMVC.DAO;
 
 namespace AnacondaMVC.Controllers
 {
@@ -168,6 +169,8 @@ namespace AnacondaMVC.Controllers
                     {
                         var walletDao = new WalletDAO(am);
                         walletDao.CreateWallet(user.Id);
+                        var playerStatisticsDao = new PlayerStatisticsDAO(am);
+                        playerStatisticsDao.CreatePlayerStatistics(user.Id);
                         am.SaveChanges();
                     }
 
