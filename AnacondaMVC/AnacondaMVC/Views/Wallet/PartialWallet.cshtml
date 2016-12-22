@@ -4,5 +4,5 @@
 }
 
 <li>
-    @Html.ActionLink((string)ViewBag.TotalCredits + " credits", "Index", "Wallet")
+    <a href="@Url.Action("Index", "Wallet")">@ViewBag.TotalCredits <span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span></a>
 </li>

@@ -10,40 +10,58 @@ using System.Web.Mvc;
 
 namespace AnacondaMVC.Controllers
 {
+    [Authorize]
     public class PlayerStatisticsController : Controller
     {
         // GET: PlayerStatistics
         public ActionResult Index()
         {
-            ViewBag.TotalXP = TotalXP();
+            CheckIfPlayerStatisticsExist();
 
-            return View();
+            var user = HttpContext.User.Identity as ClaimsIdentity;
+            var userId = user.GetUserId();
+
+            using (var am = new AnacondaModel())
+            {
+                var playerStatisticsDao = new PlayerStatisticsDAO(am);
+
+                var playerStatistics = playerStatisticsDao.GetPlayerStatistics(userId);
+
+                return View(playerStatistics);
+            }
         }
 
         [ChildActionOnly]
         public ActionResult PartialXP()
         {
-            ViewBag.TotalXP = TotalXP();
+            CheckIfPlayerStatisticsExist();
 
-            return PartialView();
+            var user = HttpContext.User.Identity as ClaimsIdentity;
+            var userId = user.GetUserId();
+
+            using (var am = new AnacondaModel())
+            {
+                var playerStatisticsDao = new PlayerStatisticsDAO(am);
+
+                var playerStatistics = playerStatisticsDao.GetPlayerStatistics(userId);
+
+                return PartialView(playerStatistics);
+            }
         }
 
-        private string TotalXP()
+        private void CheckIfPlayerStatisticsExist()
         {
             var user = HttpContext.User.Identity as ClaimsIdentity;
             var userId = user.GetUserId();
 
-            int totalXP = 0;
             using (var am = new AnacondaModel())
             {
                 var playerStatisticsDao = new PlayerStatisticsDAO(am);
                 playerStatisticsDao.CreatePlayerStatisticsIfNotExist(userId);
                 am.SaveChanges();
 
-                totalXP = am.UserStatistics.First(s => s.Id == userId).Experience;
+                playerStatisticsDao.GetPlayerStatistics(userId);
             }
-
-            return totalXP.ToString();
         }
     }
 }
