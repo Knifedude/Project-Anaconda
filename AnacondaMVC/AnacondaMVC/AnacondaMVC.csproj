@@ -303,6 +303,7 @@
     <Content Include="Views\PlayerStatistics\Leaderboard.cshtml" />
     <Content Include="Views\Bonus\PartialBonus.cshtml" />
     <Content Include="Views\Manage\PlayerIndex.cshtml" />
+    <Content Include="Views\Bonus\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
