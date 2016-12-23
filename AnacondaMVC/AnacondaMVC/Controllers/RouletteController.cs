@@ -37,6 +37,19 @@ namespace AnacondaMVC.Controllers
         }
 
 
+        public ActionResult Remove(Bet betType)
+        {
+            if (Session["bets"] != null)
+            {
+                var bets = (Dictionary<string, Bet>) Session["bets"];
+                bets.Remove(betType.Type);
+                Session["bets"] = bets;
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
         [HttpPost]
         public ActionResult PlaceBet(Bet bet)
         {
