@@ -199,6 +199,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BonusController.cs" />
+    <Compile Include="Controllers\GameStatisticsController.cs" />
     <Compile Include="Controllers\PlayerStatisticsController.cs" />
     <Compile Include="Controllers\RouletteController.cs" />
     <Compile Include="Controllers\StaticContentController.cs" />
@@ -303,6 +304,7 @@
     <Content Include="Views\PlayerStatistics\Leaderboard.cshtml" />
     <Content Include="Views\Bonus\PartialBonus.cshtml" />
     <Content Include="Views\Manage\PlayerIndex.cshtml" />
+    <Content Include="Views\GameStatistics\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

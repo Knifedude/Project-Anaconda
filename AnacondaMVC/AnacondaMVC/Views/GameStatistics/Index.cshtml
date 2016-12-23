@@ -1,0 +1,80 @@
+﻿@model IEnumerable<AnacondaMVC.Models.GameStatistic>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Game Statistics</h2>
+
+@using (Html.BeginForm("Index", "GameStatistics", FormMethod.Get))
+{
+    <div class="col-md-3">
+        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control", @placeholder = "Search for..." })
+    </div>
+    <div class="col-md-2">
+        <input type="submit" class="btn btn-default" value="Search!" />
+    </div>
+}
+
+<div class="col-md-12">
+    <ul>
+        @for (int i = 0; i < ViewBag.GameCount; i++)
+        {
+            <li>
+                <strong>@ViewBag.GameNames[i]</strong>
+                <br />
+                <p>
+                    Average credit result: @ViewBag.AvgResult[i]
+                    <br />
+                    Times played: @ViewBag.TimesPlayed[i]
+                </p>
+            </li>
+        }
+    </ul>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Game name", "Index", new { sortOrder = ViewBag.GameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Credit result", "Index", new { sortOrder = ViewBag.ResultSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Game.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreditResult)
+        </td>
+    </tr>
+}
+
+</table>
+
+Page @(ViewBag.PageCount < ViewBag.PageNumber ? 0 : ViewBag.PageNumber) of @ViewBag.PageCount
+
+<br />
+
+@if (ViewBag.PageCount > 1)
+{
+    @Html.ActionLink("<", "Index", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page = 1 }, new { @class = "btn btn-default" })
+
+    for (int i = Math.Max(ViewBag.PageNumber - 5, 1); i <= Math.Min(ViewBag.PageNumber + 5, ViewBag.PageCount); i++)
+    {
+        if (ViewBag.PageNumber == i)
+        {
+            @Html.ActionLink(i.ToString(), "Index", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page = i }, new { @class = "btn btn-primary" });
+        }
+        else
+        {
+            @Html.ActionLink(i.ToString(), "Index", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page = i }, new { @class = "btn btn-default" });
+        }
+    }
+
+    @Html.ActionLink(">", "Index", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page = ViewBag.PageCount }, new { @class = "btn btn-default" })
+}
