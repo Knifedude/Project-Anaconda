@@ -6,14 +6,14 @@ namespace AnacondaMVC.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("anaconda.UserStatistics")]
-    public partial class UserStatistic
+    [Table("anaconda.UserDaily")]
+    public partial class UserDaily
     {
         public string Id { get; set; }
 
-        public int Experience { get; set; }
+        public DateTime? LastDaily { get; set; }
 
-        public int Luck { get; set; }
+        public DateTime? LastHourly { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }
     }

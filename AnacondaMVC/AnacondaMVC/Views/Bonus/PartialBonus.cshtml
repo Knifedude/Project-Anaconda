@@ -1,0 +1,20 @@
+﻿
+@model AnacondaMVC.Controllers.BonusController.BonusViewModel
+@{
+    ViewBag.Title = "PartialBonus";
+}
+
+@if (Model.Daily || Model.Hourly)
+{
+    <li>
+        @if (Model.Daily && Model.Hourly)
+        {
+            <a>Bonus<span class="badge">2</span></a>
+        }
+        else if (Model.Hourly || Model.Daily)
+        {
+            <a>Bonus<span class="badge">1</span></a>
+        }
+
+    </li>
+}

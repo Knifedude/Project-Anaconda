@@ -15,9 +15,9 @@ namespace AnacondaMVC.Models
         public virtual DbSet<Game> Games { get; set; }
         public virtual DbSet<GameStatistic> GameStatistics { get; set; }
         public virtual DbSet<GlobalProp> GlobalProps { get; set; }
+        public virtual DbSet<UserDaily> UserDailies { get; set; }
         public virtual DbSet<UserStatistic> UserStatistics { get; set; }
         public virtual DbSet<Wallet> Wallets { get; set; }
-        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
@@ -40,6 +40,10 @@ namespace AnacondaMVC.Models
                 .WithRequired(e => e.AspNetUser)
                 .HasForeignKey(e => e.UserId)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<AspNetUser>()
+                .HasOptional(e => e.UserDaily)
+                .WithRequired(e => e.AspNetUser);
 
             modelBuilder.Entity<AspNetUser>()
                 .HasOptional(e => e.UserStatistic)

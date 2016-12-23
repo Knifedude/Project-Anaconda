@@ -198,6 +198,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BonusController.cs" />
     <Compile Include="Controllers\PlayerStatisticsController.cs" />
     <Compile Include="Controllers\RouletteController.cs" />
     <Compile Include="Controllers\StaticContentController.cs" />
@@ -217,12 +218,12 @@
     <Compile Include="Models\AspNetUser.cs" />
     <Compile Include="Models\AspNetUserClaim.cs" />
     <Compile Include="Models\AspNetUserLogin.cs" />
-    <Compile Include="Models\C__MigrationHistory.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\GameStatistic.cs" />
     <Compile Include="Models\GlobalProp.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\UserDaily.cs" />
     <Compile Include="Models\UserStatistic.cs" />
     <Compile Include="Models\Wallet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -300,6 +301,7 @@
     <Content Include="Views\PlayerStatistics\Index.cshtml" />
     <Content Include="Views\PlayerStatistics\PartialXP.cshtml" />
     <Content Include="Views\PlayerStatistics\Leaderboard.cshtml" />
+    <Content Include="Views\Bonus\PartialBonus.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

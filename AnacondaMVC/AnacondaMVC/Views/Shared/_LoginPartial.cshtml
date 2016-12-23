@@ -5,14 +5,15 @@
     {
     @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        @{ Html.RenderAction("PartialXP", "PlayerStatistics"); }
-        @{ Html.RenderAction("PartialWallet", "Wallet"); }
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+        <ul class="nav navbar-nav navbar-right">
+            @{ Html.RenderAction("PartialBonus", "Bonus");}
+            @{ Html.RenderAction("PartialXP", "PlayerStatistics"); }
+            @{ Html.RenderAction("PartialWallet", "Wallet"); }
+            <li>
+                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new {title = "Manage"})
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
     }
 }
 else
