@@ -58,10 +58,10 @@ namespace AnacondaGames.Games.Roulette
             // Validate Bets
             foreach (var bet in bets)
             {
-                if (!_betTypes.ContainsKey(bet.Type))
+                if ((!_betTypes.ContainsKey(bet.Type) && bet.Type != "Number") || (bet.Type == "Number" && !_betTypes.ContainsKey(bet.Number.ToString())))
                 {
                     throw new InvalidBetException("Invalid bet type '" + bet.Type + "'");
-                }
+                } 
             }
 
             var model = new RouletteResultModel();
@@ -77,7 +77,7 @@ namespace AnacondaGames.Games.Roulette
 
             foreach (var bet in bets)
             {
-                var betType = _betTypes[bet.Type];
+                var betType = bet.Type == "Number" ? _betTypes[Convert.ToString(bet.Number)] : _betTypes[bet.Type];
 
                 if (betType.IsWinningMethod.Invoke(spinResult))
                 {

@@ -38,10 +38,10 @@ namespace AnacondaGames.Games.WheelOfFortune
         public List<RandomItem<ISpinAction>> Actions { get; set; }
 
 
-        public GameResult Play(Bet bet)
+        public GameResult Play(Bet bet = null)
         {
             var rp = new RandomPicker<ISpinAction>(_actions, _random.Next());
-            var result = rp.Pick().Item.Execute(new GameContext(bet.Credits));
+            var result = rp.Pick().Item.Execute(new GameContext(bet?.Credits ?? 0));
             return result;
         }
 
@@ -57,8 +57,42 @@ namespace AnacondaGames.Games.WheelOfFortune
                 new RandomItem<ISpinAction>(0.2, new BetMultiplier(1.1m)),
                 new RandomItem<ISpinAction>(0.1, new BetMultiplier(0m)),
                 new RandomItem<ISpinAction>(0.1 / 3, new BetMultiplier(1.5m)),
-                new RandomItem<ISpinAction>(0.1 / 3, new BetMultiplier(2m)),
+                new RandomItem<ISpinAction>(0.1 / 3, new BetMultiplier(2m)),   
                 new RandomItem<ISpinAction>(0.1 / 3, new BetMultiplier(3m))
+            };
+            return wheel;
+        }
+
+        public static WheelOfFortune CreateDaily(string name, Random random)
+        {
+            WheelOfFortune wheel = new WheelOfFortune(name, random);
+
+            double chance = 1.0;
+
+            wheel._actions = new List<RandomItem<ISpinAction>>
+            {
+                new RandomItem<ISpinAction>(0.6, new CreditIncrease(100)),
+                new RandomItem<ISpinAction>(0.2, new CreditIncrease(300)),
+                new RandomItem<ISpinAction>(0.1, new CreditIncrease(600)),
+                new RandomItem<ISpinAction>(0.1 / 3, new CreditIncrease(1000)),
+                new RandomItem<ISpinAction>(0.1 / 3, new CreditIncrease(2000)),
+                new RandomItem<ISpinAction>(0.1 / 3, new CreditIncrease(3000))
+            };
+            return wheel;
+        }
+
+
+        public static WheelOfFortune CreateHourly(string name, Random random)
+        {
+            WheelOfFortune wheel = new WheelOfFortune(name, random);
+            wheel._actions = new List<RandomItem<ISpinAction>>
+            {
+                new RandomItem<ISpinAction>(0.6, new CreditIncrease(10)),
+                new RandomItem<ISpinAction>(0.2, new CreditIncrease(30)),
+                new RandomItem<ISpinAction>(0.1, new CreditIncrease(60)),
+                new RandomItem<ISpinAction>(0.1 / 3, new CreditIncrease(100)),
+                new RandomItem<ISpinAction>(0.1 / 3, new CreditIncrease(200)),
+                new RandomItem<ISpinAction>(0.1 / 3, new CreditIncrease(300))
             };
             return wheel;
         }

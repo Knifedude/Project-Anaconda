@@ -94,18 +94,25 @@ namespace AnacondaMVC.Controllers
                     if (walletDao.Pay(user.GetUserId(), totalBet))
                     {
                         Roulette roulette = GetRoulette();
-                        rrm = roulette.Spin(bets.Values);
 
+                        try
+                        {
+                            rrm = roulette.Spin(bets.Values);
+                            rrm.Status = ResultStatus.Succes;
+                        }
+                        catch (InvalidBetException ex)
+                        {
+                            rrm = new Roulette.RouletteResultModel();
+                            rrm.Status = ResultStatus.Failed;
+                        }
+                        
                         var wallet = walletDao.GetWallet(user.GetUserId());
                         wallet.Credits += rrm.WinningBets.Sum(u => u.Payout);
-
-                        rrm.Status = ResultStatus.Succes;
                         anacondaModel.SaveChanges();
                     }
                     else
                     {
                         rrm = new Roulette.RouletteResultModel { Status = ResultStatus.InsufficientCredits };
-                        
                     }
 
                 }
