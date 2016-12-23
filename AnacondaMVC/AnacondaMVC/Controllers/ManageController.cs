@@ -7,6 +7,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AnacondaMVC.Models;
+using System.Web.Security;
+using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace AnacondaMVC.Controllers
 {
@@ -72,6 +75,9 @@ namespace AnacondaMVC.Controllers
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
+
+            model.UserRole = User.IsInRole("Admin") ? "Admin, Player" : "Player";
+
             return View(model);
         }
 
@@ -322,6 +328,65 @@ namespace AnacondaMVC.Controllers
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 
+        //
+        // GET: /Manage/PlayerIndex
+        [Authorize(Roles = "Admin")]
+        public ActionResult PlayerIndex(string sortOrder, string currentFilter, string searchString, int? page)
+        {
+            ViewBag.SortOrder = sortOrder;
+            ViewBag.UserNameSortParm = String.IsNullOrEmpty(sortOrder) ? "username_desc" : "";
+            ViewBag.CreditsSortParm = sortOrder == "credits" ? "credits_desc" : "credits";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var model = new List<AspNetUser>();
+
+            using (var am = new AnacondaModel())
+            {
+                var users = am.AspNetUsers.Select(u => u);
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    users = users.Where(u => u.UserName.Contains(searchString) || u.Email.Contains(searchString));
+                }
+
+                switch (sortOrder)
+                {
+                    case "username_desc":
+                        users = users.OrderByDescending(u => u.UserName);
+                        break;
+                    case "credits":
+                        users = users.OrderBy(u => u.Wallet.Credits + u.Wallet.CasinoCredits);
+                        break;
+                    case "credits_desc":
+                        users = users.OrderByDescending(u => u.Wallet.Credits + u.Wallet.CasinoCredits);
+                        break;
+                    default:
+                        users = users.OrderBy(u => u.UserName);
+                        break;
+                }
+
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+
+                ViewBag.PageNumber = pageNumber;
+                ViewBag.PageCount = (int)Math.Ceiling((double)users.Count() / pageSize);
+
+                model = users.Include(u => u.UserStatistic).Include(u => u.Wallet).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            }
+
+            return View(model);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)
@@ -333,7 +398,7 @@ namespace AnacondaMVC.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 

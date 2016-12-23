@@ -300,6 +300,7 @@
     <Content Include="Views\PlayerStatistics\Index.cshtml" />
     <Content Include="Views\PlayerStatistics\PartialXP.cshtml" />
     <Content Include="Views\PlayerStatistics\Leaderboard.cshtml" />
+    <Content Include="Views\Manage\PlayerIndex.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

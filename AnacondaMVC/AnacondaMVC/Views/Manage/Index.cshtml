@@ -3,7 +3,7 @@
     ViewBag.Title = "Manage";
 }
 
-<h2>@ViewBag.Title.</h2>
+<h2>@ViewBag.Title</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
@@ -83,5 +83,14 @@
                     }
                 }*@
         </dd>
+        <dt>User role(s):</dt>
+        <dd>
+            @Model.UserRole
+        </dd>
     </dl>
+
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Player index", "PlayerIndex", null, new { @class="btn btn-info" })
+    }
 </div>
