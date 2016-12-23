@@ -41,23 +41,23 @@ namespace AnacondaMVC.Controllers
 
             if (Session["last-user-daily-credits"] != null)
             {
-                bonus.DailyCredits = (double) Session["last-user-daily"];
+                bonus.DailyCredits = (int) Session["last-user-daily-credits"];
+//                Session.Remove("last-user-daily-credits");
             }
-
-//            if (Session["last-user-daily-date"] != null)
-//            {
-//                bonus.DailyCredits = (double)Session["last-user-daily-date"];
-//            }
+            else
+            {
+                bonus.DailyCredits = 0;
+            }
 
             if (Session["last-user-hourly-credits"] != null)
             {
-                bonus.DailyCredits = (double) Session["last-user-hourly-credits"];
+                bonus.HourlyCredits = (int) Session["last-user-hourly-credits"];
+//                Session.Remove("last-user-hourly-credits");
             }
-
-//            if (Session["last-user-hourly-credits"] != null)
-//            {
-//                bonus.DailyCredits = (double)Session["last-user-hourly-credits"];
-//            }
+            else
+            {
+                bonus.HourlyCredits = 0;
+            }
 
             return View(bonus);
         }
@@ -106,9 +106,9 @@ namespace AnacondaMVC.Controllers
 
             public bool Hourly { get; set; }
 
-            public double HourlyCredits { get; set; }
+            public int HourlyCredits { get; set; }
 
-            public double DailyCredits { get; set; }
+            public int DailyCredits { get; set; }
 
             public DateTime LastDaily { get; set; }
 
@@ -116,7 +116,6 @@ namespace AnacondaMVC.Controllers
 
         }
 
-        [HttpPost]
         public ActionResult DailyFortune()
         {
             var wheelOfFortune = AnacondaGames.Games.WheelOfFortune.WheelOfFortune.CreateDaily("Wheel of Fortune", new Random());
@@ -130,7 +129,7 @@ namespace AnacondaMVC.Controllers
 
                 result = wheelOfFortune.Play();
 
-                var daily = anacondaModel.UserDailies.First(u => u.Id == userId);
+                var daily = anacondaModel.UserDailies.Any() ? anacondaModel.UserDailies.First(u => u.Id == userId) : null;
                 if (daily == null)
                 {
                     var aspUser = anacondaModel.AspNetUsers.First(u => u.Id == userId);
@@ -144,6 +143,18 @@ namespace AnacondaMVC.Controllers
                 }
                 else
                 {
+
+                    if (daily.LastDaily != null)
+                    {
+
+                        var timespan = DateTime.Now - daily.LastDaily.Value;
+                        if (timespan.Hours < 24)
+                        {
+                            return RedirectToAction("Index");
+                        }
+
+                    }
+
                     daily.LastDaily = DateTime.Now;
                 }
                 
@@ -161,7 +172,6 @@ namespace AnacondaMVC.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
         public ActionResult HourlyFortune()
         {
             var wheelOfFortune = AnacondaGames.Games.WheelOfFortune.WheelOfFortune.CreateHourly("Wheel of Fortune", new Random());
@@ -175,7 +185,7 @@ namespace AnacondaMVC.Controllers
 
                 result = wheelOfFortune.Play();
 
-                var daily = anacondaModel.UserDailies.First(u => u.Id == userId);
+                var daily = anacondaModel.UserDailies.Any() ? anacondaModel.UserDailies.First(u => u.Id == userId) : null;
                 if (daily == null)
                 {
                     var aspUser = anacondaModel.AspNetUsers.First(u => u.Id == userId);
@@ -189,6 +199,17 @@ namespace AnacondaMVC.Controllers
                 }
                 else
                 {
+                    if (daily.LastHourly != null)
+                    {
+
+                        var timespan = DateTime.Now - daily.LastHourly.Value;
+                        if (timespan.Minutes < 60)
+                        {
+                            return RedirectToAction("Index");
+                        }
+
+                    }
+
                     daily.LastHourly = DateTime.Now;
                 }
 
