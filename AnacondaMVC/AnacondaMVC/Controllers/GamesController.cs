@@ -37,7 +37,7 @@ namespace AnacondaMVC.Controllers
         {
             int bet = collection["Bet"].AsInt();
 
-            var wheelOfFortune = new WheelOfFortune("Wheel of Fortune", new Random());
+            var wheelOfFortune = AnacondaGames.Games.WheelOfFortune.WheelOfFortune.CreateDefault("Wheel of Fortune", new Random());
             var user = HttpContext.User.Identity as ClaimsIdentity;
             var userId = user.GetUserId();
             GameResult result;
