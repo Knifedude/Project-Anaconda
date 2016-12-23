@@ -43,6 +43,9 @@
   <ItemGroup>
     <Compile Include="Games\GameContext.cs" />
     <Compile Include="Games\GameResult.cs" />
+    <Compile Include="Games\Game.cs" />
+    <Compile Include="Games\IMultiBetGame.cs" />
+    <Compile Include="Games\ISingleBetGame.cs" />
     <Compile Include="Games\SlotMachine\CheckRows.cs" />
     <Compile Include="Games\Roulette\InvalidBetException.cs" />
     <Compile Include="Games\Roulette\Roulette.cs" />
