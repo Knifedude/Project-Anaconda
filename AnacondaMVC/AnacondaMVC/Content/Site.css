@@ -52,3 +52,22 @@ textarea {
     text-shadow: 0 1px 0 #ffffff;
 }
 
+.carousel-inner div.item img {
+    width: 100%;
+}
+
+.carousel-inner div.item div {
+    color: black;
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke-width: 0.05vw;
+    -webkit-text-stroke-color: black;
+}
+
+.carousel-inner div.item h3 {
+    font-size: 3vw;
+    -webkit-text-stroke-width: 0.1vw;
+}
+
+.carousel-inner div.item p {
+    font-size: 1.5vw;
+}
