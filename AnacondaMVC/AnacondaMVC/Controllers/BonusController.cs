@@ -73,20 +73,25 @@ namespace AnacondaMVC.Controllers
 
             using (var am = new AnacondaModel())
             {
+                UserDaily daily = null;
+                if (am.UserDailies.Any())
+                {
+                    daily = am.UserDailies.First(u => u.Id == userId);
+                }
 
-                var daily = am.UserDailies.Any() ? am.UserDailies.First(u => u.Id == userId) : new UserDaily();
                 if (daily == null)
                 {
+                    var aspUser = am.AspNetUsers.First(u => u.Id == userId);
+                    daily = new UserDaily() {AspNetUser = aspUser, Id = aspUser.Id};
                     bonus.Daily = true;
                     bonus.Hourly = true;
+
+                    am.SaveChanges();
                 }
                 else
                 {
                     bonus.Daily = daily.LastDaily == null || ((DateTime.Now - daily.LastDaily).Value.Hours >= 24);
                     bonus.Hourly = daily.LastHourly == null || ((DateTime.Now - daily.LastDaily).Value.Minutes >= 60);
-                    am.UserDailies.Add(daily);
-
-                    am.SaveChanges();
                 }
 
             }
