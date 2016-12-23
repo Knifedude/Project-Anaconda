@@ -1,0 +1,85 @@
+﻿@model IEnumerable<AnacondaMVC.Models.AspNetUser>
+
+@{
+    ViewBag.Title = "PlayerIndex";
+}
+
+<h2>Player Index</h2>
+
+@Html.ActionLink("Back to Manage", "Index", null, new { @class="btn btn-link" })
+
+@using (Html.BeginForm("PlayerIndex", "Manage", FormMethod.Get))
+{
+    <div class="col-md-3">
+        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control", @placeholder = "Search for..." })
+    </div>
+    <div class="col-md-2">
+        <input type="submit" class="btn btn-default" value="Search!" />
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Username", "PlayerIndex", new { sortOrder = ViewBag.UserNameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LockoutEndDateUtc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserStatistic.Experience)
+        </th>
+        <th>
+            @Html.ActionLink("Credits + Casino Credits", "PlayerIndex", new { sortOrder = ViewBag.CreditsSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LockoutEndDateUtc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserStatistic.Experience)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Wallet.Credits) + @Html.DisplayFor(modelItem => item.Wallet.CasinoCredits)
+        </td>
+    </tr>
+}
+
+</table>
+
+<br />
+
+Page @(ViewBag.PageCount < ViewBag.PageNumber ? 0 : ViewBag.PageNumber) of @ViewBag.PageCount
+
+<br />
+
+@if (ViewBag.PageCount > 1)
+{
+    @Html.ActionLink("<", "PlayerIndex", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page = 1 }, new { @class = "btn btn-default" })
+
+    for (int i = Math.Max(ViewBag.PageNumber - 5, 1); i <= Math.Min(ViewBag.PageNumber + 5, ViewBag.PageCount); i++)
+    {
+        if (ViewBag.PageNumber == i)
+        {
+            @Html.ActionLink(i.ToString(), "PlayerIndex", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page = i }, new { @class = "btn btn-primary" });
+        }
+        else
+        {
+            @Html.ActionLink(i.ToString(), "PlayerIndex", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page = i }, new { @class = "btn btn-default" });
+        }
+    }
+
+    @Html.ActionLink(">", "PlayerIndex", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page = ViewBag.PageCount }, new { @class = "btn btn-default" })
+}
