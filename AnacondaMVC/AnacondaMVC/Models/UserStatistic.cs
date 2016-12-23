@@ -16,5 +16,15 @@ namespace AnacondaMVC.Models
         public int Luck { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }
+
+        public int ExperienceLevel
+        {
+            get
+            {
+                int level = 1;
+                level += (int)Math.Floor(Experience / 1000d);
+                return level;
+            }
+        }
     }
 }
