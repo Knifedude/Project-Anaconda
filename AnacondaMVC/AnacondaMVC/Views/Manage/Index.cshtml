@@ -92,5 +92,6 @@
     @if (User.IsInRole("Admin"))
     {
         @Html.ActionLink("Player index", "PlayerIndex", null, new { @class="btn btn-info" })
+        @Html.ActionLink("Game statistics", "Index", "GameStatistics", null, new { @class="btn btn-success" })
     }
 </div>

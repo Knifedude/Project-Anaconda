@@ -58,6 +58,13 @@ namespace AnacondaMVC.Controllers
                 wallet.Credits += result.CreditsGained;
                 var userStats = anacondaModel.UserStatistics.First(s => s.Id == userId);
                 userStats.Experience += 100;
+                var gameStats = anacondaModel.GameStatistics;
+                gameStats.Add(new GameStatistic()
+                {
+                    GameId = 1,
+                    UserId = userId,
+                    CreditResult = result.CreditsGained - bet
+                });
                 anacondaModel.SaveChanges();
             }
 
@@ -124,6 +131,13 @@ namespace AnacondaMVC.Controllers
                 wallet.Credits += result.CreditsGained;
                 var userStats = anacondaModel.UserStatistics.First(s => s.Id == userId);
                 userStats.Experience += 100;
+                var gameStats = anacondaModel.GameStatistics;
+                gameStats.Add(new GameStatistic()
+                {
+                    GameId = 3,
+                    UserId = userId,
+                    CreditResult = result.CreditsGained - bet
+                });
                 anacondaModel.SaveChanges();
             }
 
