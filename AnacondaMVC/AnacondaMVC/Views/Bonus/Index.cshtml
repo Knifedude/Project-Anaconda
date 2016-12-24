@@ -6,67 +6,106 @@
 
 <h2>Bonus</h2>
 
-    <div class="row">
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/0/00/Wheel_of_fortune_phil.jpg" alt="Wheel of Fortune">
-                    <div class="caption">
-                        <h3>Daily Fortune</h3>
-                        <p>Spin the wheel of fortune and win</p>
+<div class="row">
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+            <img src="https://upload.wikimedia.org/wikipedia/en/0/00/Wheel_of_fortune_phil.jpg" alt="Wheel of Fortune">
+            <div class="caption">
+                <h3>Daily Fortune</h3>
+                <p>Spin the wheel of fortune and win</p>
                         
-                        @if (Model.Daily)
-                        {
-                            <p>@Html.ActionLink("Play", "DailyFortune", null, new {@class = "btn btn-primary", @role = "button"})</p>
-                        }
-                        else
-                        {
-                            if (Model.DailyCredits > 0)
-                            {
-                                <div class="alert alert-success" role="alert">
-                                    <p>You won @Model.DailyCredits</p>
-                                </div>
-                            }
-                                <div class="alert alert-danger" role="alert">
-                                    <p>You already played this bonus today!</p>
-                                </div>
-                        }
-
-                        
-
+                @if (Model.Daily)
+                {
+                    <p>@Html.ActionLink("Play", "DailyFortune", null, new {@class = "btn btn-primary", @role = "button"})</p>
+                }
+                else
+                {
+                    
+                    <div class="alert alert-danger" role="alert">
+                        <p>You already played this bonus today!</p>
                     </div>
-                </div>
+                }
             </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/0/00/Wheel_of_fortune_phil.jpg" alt="Wheel of Fortune">
-                    <div class="caption">
-                        <h3>Hourly Fortune</h3>
-                        <p>Spin the wheel of fortune and win</p>
-                        
-                        @if (Model.Hourly)
-                        {
-                            <p>@Html.ActionLink("Play", "HourlyFortune", null, new {@class = "btn btn-primary", @role = "button"})</p>
-                        }
-                        else
-                        {
-                            if (Model.HourlyCredits > 0)
-                            {
-                                <div class="alert alert-success alert-dismissible" role="alert">
-                                    <p>You won @Model.HourlyCredits</p>
-                                </div>
-                            }
-                            <div class="alert alert-danger" role="alert">
-                                <p>You already played this bonus this hour!</p>
-                            </div>
-                        }
-
-                        
-
-                        
-                    </div>
-                </div>
-            </div>
-
+        </div>
     </div>
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+            <img src="https://upload.wikimedia.org/wikipedia/en/0/00/Wheel_of_fortune_phil.jpg" alt="Wheel of Fortune">
+            <div class="caption">
+                <h3>Hourly Fortune</h3>
+                <p>Spin the wheel of fortune and win</p>
+                        
+                @if (Model.Hourly)
+                {
+                    <p>@Html.ActionLink("Play", "HourlyFortune", null, new {@class = "btn btn-primary", @role = "button"})</p>
+                }
+                else
+                {
+                    
+                    <div class="alert alert-danger" role="alert">
+                        <p>You already played this bonus this hour!</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+@if (Model.DailyCredits > 0 || Model.HourlyCredits > 0)
+{
+    <div id="you-won-popup" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">You won @(Model.DailyCredits + Model.HourlyCredits) Casino Credits!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                <img src="https://media.giphy.com/media/10vfyRDXEr24RW/giphy.gif" style="width: 100%"/>
+                            </div>
+                        </div>
+                        @if (Model.HourlyCredits > 0)
+                        {
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <p>You won @(Model.HourlyCredits) Casino Credits from the Hourly Bonus!</p>
+                        </div>
+                        }
+                        @if (Model.DailyCredits > 0)
+                        {
+                        <div class="alert alert-success" role="alert">
+                            <p>You won @(Model.DailyCredits) Casino Credits from the Daily Bonus!</p>
+                        </div>
+                        }
+                    </div>
+@*                    <div class="modal-footer">*@
+@*                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+@*                    </div>*@
+                </div><!-- /.modal-content -->
+            </div>
+        <!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    
+}
+
+@section Scripts {
+    <script>
+        $(document)
+            .ready(function() {
+                var popup = $('#you-won-popup');
+                console.log(popup);
+                if (popup != undefined) {
+                    console.log('Show popup!');
+                    
+                    popup.modal('show');
+                }
+            });
+        
+
+    </script>
+}
 
 

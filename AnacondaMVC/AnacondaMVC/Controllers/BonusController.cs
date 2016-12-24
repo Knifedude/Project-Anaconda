@@ -42,7 +42,7 @@ namespace AnacondaMVC.Controllers
             if (Session["last-user-daily-credits"] != null)
             {
                 bonus.DailyCredits = (int) Session["last-user-daily-credits"];
-//                Session.Remove("last-user-daily-credits");
+                Session.Remove("last-user-daily-credits");
             }
             else
             {
@@ -52,7 +52,7 @@ namespace AnacondaMVC.Controllers
             if (Session["last-user-hourly-credits"] != null)
             {
                 bonus.HourlyCredits = (int) Session["last-user-hourly-credits"];
-//                Session.Remove("last-user-hourly-credits");
+                Session.Remove("last-user-hourly-credits");
             }
             else
             {
@@ -158,7 +158,7 @@ namespace AnacondaMVC.Controllers
                     daily.LastDaily = DateTime.Now;
                 }
                 
-                wallet.Credits += result.CreditsGained;
+                wallet.CasinoCredits += result.CreditsGained;
                 var userStats = anacondaModel.UserStatistics.First(s => s.Id == userId);
                 userStats.Experience += 100;
 
@@ -213,7 +213,7 @@ namespace AnacondaMVC.Controllers
                     daily.LastHourly = DateTime.Now;
                 }
 
-                wallet.Credits += result.CreditsGained;
+                wallet.CasinoCredits += result.CreditsGained;
                 var userStats = anacondaModel.UserStatistics.First(s => s.Id == userId);
                 userStats.Experience += 100;
 
