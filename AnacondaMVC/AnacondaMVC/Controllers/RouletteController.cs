@@ -105,9 +105,19 @@ namespace AnacondaMVC.Controllers
                             rrm = new Roulette.RouletteResultModel();
                             rrm.Status = ResultStatus.Failed;
                         }
-                        
-                        var wallet = walletDao.GetWallet(user.GetUserId());
+
+                        var userId = user.GetUserId();
+                        var wallet = walletDao.GetWallet(userId);
                         wallet.Credits += rrm.WinningBets.Sum(u => u.Payout);
+                        var userStats = anacondaModel.UserStatistics.First(s => s.Id == userId);
+                        userStats.Experience += 100;
+                        var gameStats = anacondaModel.GameStatistics;
+                        gameStats.Add(new GameStatistic()
+                        {
+                            GameId = 2,
+                            UserId = userId,
+                            CreditResult = rrm.WinningBets.Sum(u => u.Payout) - bets.Values.Select(b => b.Credits).Sum()
+                        });
                         anacondaModel.SaveChanges();
                     }
                     else
