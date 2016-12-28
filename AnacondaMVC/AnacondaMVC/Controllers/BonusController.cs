@@ -31,8 +31,8 @@ namespace AnacondaMVC.Controllers
                 }
                 else
                 {
-                    bonus.Daily = daily.LastDaily == null || ((DateTime.Now - daily.LastDaily).Value.Hours >= 24);
-                    bonus.Hourly = daily.LastHourly == null || ((DateTime.Now - daily.LastDaily).Value.Minutes >= 60);
+                    bonus.Daily = daily.LastDaily == null || ((DateTime.Now - daily.LastDaily).Value.TotalHours >= 24);
+                    bonus.Hourly = daily.LastHourly == null || ((DateTime.Now - daily.LastDaily).Value.TotalMinutes >= 60);
 
                     if (daily.LastDaily != null) bonus.LastDaily = daily.LastDaily.Value;
                     if (daily.LastHourly != null) bonus.LastHourly = daily.LastHourly.Value;
@@ -90,8 +90,8 @@ namespace AnacondaMVC.Controllers
                 }
                 else
                 {
-                    bonus.Daily = daily.LastDaily == null || ((DateTime.Now - daily.LastDaily).Value.Hours >= 24);
-                    bonus.Hourly = daily.LastHourly == null || ((DateTime.Now - daily.LastDaily).Value.Minutes >= 60);
+                    bonus.Daily = daily.LastDaily == null || ((DateTime.Now - daily.LastDaily).Value.TotalHours >= 24);
+                    bonus.Hourly = daily.LastHourly == null || ((DateTime.Now - daily.LastDaily).Value.TotalMinutes >= 60);
                 }
 
             }
